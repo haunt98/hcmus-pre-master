@@ -3,13 +3,13 @@ using namespace std;
 
 // Prototype
 int sum(int s[], int n);
-void swap(int *a, int*b);
+void swap(int* a, int* b);
 void ffun();
 void ffun01();
 void sort(int arr[], int n);
 void printArr(int arr[], int n);
-void deleteArr(int arr[], int *n, int k);
-void dedupeArr(int arr[], int *n);
+void deleteArr(int arr[], int* n, int k);
+void dedupeArr(int arr[], int* n);
 void testDedupeArr();
 
 int main() {
@@ -62,7 +62,7 @@ int sum(int s[], int n) {
     return sum;
 }
 
-void swap(int *a, int*b) {
+void swap(int* a, int* b) {
     int temp = *a;
     *a = *b;
     *b = temp;
@@ -70,13 +70,13 @@ void swap(int *a, int*b) {
 
 // Manipulate pointer
 void ffun() {
-    int *a = new int[100];
+    int* a = new int[100];
     a[0] = 10;
     a[1] = 20;
     // Pointer b same address as pointer a
-    int *b = a;
+    int* b = a;
     printf("ffun *b %d\n", *b);
-    printf("ffun *(b + 1) %d\n", *(b+ 1));
+    printf("ffun *(b + 1) %d\n", *(b + 1));
 }
 
 void ffun01() {
@@ -107,22 +107,22 @@ void printArr(int arr[], int n) {
 }
 
 // Delete k index of arr, change n aka len of arr
-void deleteArr(int arr[], int *n, int k) {
-    if (k < 0 || k >= *n){
+void deleteArr(int arr[], int* n, int k) {
+    if (k < 0 || k >= *n) {
         return;
     }
 
     for (int i = k; i < (*n) - 1; i++) {
-        arr[i] = arr[i+1];
+        arr[i] = arr[i + 1];
     }
 
     *n = (*n) - 1;
 }
 
 // 1 1 2 3 3 -> 1 2 3
-void dedupeArr(int arr[], int *n) {
+void dedupeArr(int arr[], int* n) {
     int i = 0;
-    while(true) {
+    while (true) {
         if (arr[i] == arr[i + 1]) {
             deleteArr(arr, n, i + 1);
         }

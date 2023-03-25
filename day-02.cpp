@@ -315,3 +315,15 @@ void testFindA4SoDuToiThieu() {
     printf("so du thang %d with a - 1 %d %.6f\n", 5, a - 1,
            soDuThangNV2(a - 1, 0.01, 50000, 5));
 }
+
+// TODO: Knapsack problem
+// Knapsack has a weight capacity
+// Each item in museum has weight, and money value
+// Find combo to maximize money
+// Example
+// Knapsack 10Kg
+// Item 1 6$ 2kg
+// Item 2 10$ 2kg
+// Item 3 12$ 3kg
+// Item 4 16$ 4kg
+// Item 5 20$ 5kg

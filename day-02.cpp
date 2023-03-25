@@ -284,7 +284,7 @@ int findA4SoDuToiThieu(float b, float c, int k, int M) {
         printf("left %d right %d mid %d so du: %.4f\n", left, right, mid, soDu);
 
         if (soDu >= float(M)) {
-            // Save a
+            // Save a because right now a thoa man
             a = mid;
             right = mid - 1;
         } else if (soDu < float(M)) {

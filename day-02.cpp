@@ -9,11 +9,14 @@ void testFindTopTangGiam();
 
 float soDuThangN(float a, float b, float c, int n);
 void testSoDuThangN();
+int findA4SoDuToiThieu(float b, float c, int k, int M);
+void testFindA4SoDuToiThieu();
 
 int main() {
     testArrTangGiam();
     testFindTopTangGiam();
     testSoDuThangN();
+    testFindA4SoDuToiThieu();
 }
 
 // 1 3 5 4 2: ok
@@ -236,9 +239,9 @@ void testFindTopTangGiam() {
 // x_0 = a
 // x_n = (1 + b) * x_(n - 1) (n mod 3 != 0)
 // x_n = (1 + b) * x_(n - 1) + c (n mod 3 == 0)
-float soDuThangN(float a, float b, float c, int n) {
+float soDuThangN(int a, float b, float c, int n) {
     if (n == 0) {
-        return a;
+        return float(a);
     }
 
     if (n % 3 != 0) {
@@ -251,8 +254,8 @@ float soDuThangN(float a, float b, float c, int n) {
 // Khong de quy
 // Khong su dung mang
 // Luu bien tam chay vong lap
-float soDuThangNV2(float a, float b, float c, int n) {
-    float soDu = a;
+float soDuThangNV2(int a, float b, float c, int n) {
+    float soDu = float(a);
     for (int i = 0; i < n; i++) {
         if (n % 3 != 0) {
             soDu = (1 + b) * soDu;
@@ -266,14 +269,49 @@ float soDuThangNV2(float a, float b, float c, int n) {
 
 // Cho truoc b, c
 // Tim a toi thieu de sau k thang co so du toi thieu la M
+int findA4SoDuToiThieu(float b, float c, int k, int M) {
+    // a must be from 0 -> M
+    // Use binary search to find a
+    // Because a = M is sure so du >= M
+    // So a must <= M
+    int left = 0;
+    int right = M;
+    int a = M;
+    while (left <= right) {
+        int mid = (right - left) / 2 + left;
+
+        float soDu = soDuThangNV2(mid, b, c, k);
+        printf("left %d right %d mid %d so du: %.4f\n", left, right, mid, soDu);
+
+        if (soDu >= float(M)) {
+            // Save a
+            a = mid;
+            right = mid - 1;
+        } else if (soDu < float(M)) {
+            left = mid + 1;
+        }
+    }
+
+    return a;
+}
 
 void testSoDuThangN() {
     {
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 1; i <= 4; i++) {
             printf("so du thang %d %.6f\n", i,
                    soDuThangN(100000000, 0.01, 50000, i));
             printf("so du thang v2 %d %.6f\n", i,
                    soDuThangN(100000000, 0.01, 50000, i));
         }
     }
+}
+
+void testFindA4SoDuToiThieu() {
+    int a = findA4SoDuToiThieu(0.01, 50000, 5, 1000000);
+    printf("a toi thieu %d\n", a);
+    // Double check
+    printf("so du thang %d with a %d %.6f\n", 5, a,
+           soDuThangNV2(a, 0.01, 50000, 5));
+    printf("so du thang %d with a - 1 %d %.6f\n", 5, a - 1,
+           soDuThangNV2(a - 1, 0.01, 50000, 5));
 }

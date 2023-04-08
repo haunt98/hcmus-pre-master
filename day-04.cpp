@@ -106,5 +106,31 @@ void test() {
     delete drawingCircle;
     delete drawingRectangle;
 }
+// Only 1 CTO
+class CTO {
+  private:
+    CTO() {}
 
-int main() { test(); }
+  public:
+    string name;
+    // Static funciton with static var inside
+    // Lazy singletance
+    static CTO* GetInstance() {
+        static CTO* only_cto = new CTO();
+
+        return only_cto;
+    }
+};
+
+void test2() {
+    CTO* a = CTO::GetInstance();
+    CTO* b = CTO::GetInstance();
+    a->name = "fuck";
+    b->name = "you";
+    cout << b->name << endl;
+}
+
+int main() {
+    test();
+    test2();
+}

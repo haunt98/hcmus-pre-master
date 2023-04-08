@@ -16,7 +16,6 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
-      - uses: goto-bus-stop/setup-zig@v2
       - run: make day01
       - run: make day02
       - run: make day03

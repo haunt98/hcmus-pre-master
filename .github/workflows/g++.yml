@@ -1,0 +1,35 @@
+name: g++
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-g++:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v2
+      - run: make day01
+      - run: make day02
+      - run: make day03
+      - run: make day04
+  build-zig:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goto-bus-stop/setup-zig@v2
+      - run: make zig-day01
+      - run: make zig-day02
+      - run: make zig-day03
+      - run: make zig-day04

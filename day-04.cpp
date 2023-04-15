@@ -107,6 +107,10 @@ void test() {
     delete drawingRectangle;
 }
 // Only 1 CTO
+// How to make singleton ?
+// Hide constructor in private
+// static GetInstance()
+// return static var
 class CTO {
   private:
     CTO() {}

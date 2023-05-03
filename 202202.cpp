@@ -73,12 +73,13 @@ void cau_1c(int* arr, int n, int k) {
 }
 
 void cau_1() {
-    int arr[5];
-    arr[0] = 5;
-    arr[1] = 5;
-    arr[2] = 3;
-    arr[3] = 3;
-    arr[4] = 1;
+    // Array init quick way
+    int arr[5] = {5, 5, 3, 3, 1};
+    // arr[0] = 5;
+    // arr[1] = 5;
+    // arr[2] = 3;
+    // arr[3] = 3;
+    // arr[4] = 1;
 
     print_arr(arr, 5);
     sort_arr(arr, 5);

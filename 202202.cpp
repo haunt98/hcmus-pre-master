@@ -4,10 +4,12 @@
 using namespace std;
 
 void cau_1();
+void cau_2();
 
 int main() {
     printf("202202\n");
     cau_1();
+    cau_2();
 }
 
 void print_arr(int* arr, int n) {
@@ -73,6 +75,8 @@ void cau_1c(int* arr, int n, int k) {
 }
 
 void cau_1() {
+    printf("cau 1\n");
+
     // Array init quick way
     int arr[5] = {5, 5, 3, 3, 1};
     // arr[0] = 5;
@@ -91,4 +95,135 @@ void cau_1() {
     print_arr(arr, dedupe_len);
 
     cau_1c(arr, dedupe_len, 4);
+}
+
+struct BinarySearchTree {
+    int value;
+    BinarySearchTree* left;
+    BinarySearchTree* right;
+};
+
+BinarySearchTree* insertBST(BinarySearchTree* p, int value) {
+    if (p == NULL) {
+        BinarySearchTree* p = new BinarySearchTree();
+        p->value = value;
+        p->left = NULL;
+        p->right = NULL;
+        return p;
+    }
+
+    if (p->value == value) {
+        return p;
+    }
+
+    if (p->value > value) {
+        p->left = insertBST(p->left, value);
+        return p;
+    }
+
+    p->right = insertBST(p->right, value);
+    return p;
+}
+
+BinarySearchTree* findBST(BinarySearchTree* p, int value) {
+    if (p == NULL) {
+        return NULL;
+    }
+
+    if (p->value == value) {
+        return p;
+    }
+
+    if (p->value > value) {
+        return findBST(p->left, value);
+    }
+
+    return findBST(p->right, value);
+}
+
+void deleteBST(BinarySearchTree* p) {
+    if (p == NULL) {
+        return;
+    }
+
+    deleteBST(p->left);
+    deleteBST(p->right);
+
+    // printf("Delete %d\n", p->value);
+    delete p;
+}
+
+// Pre order N L R
+void printBST(BinarySearchTree* p, int level) {
+    if (p == NULL) {
+        return;
+    }
+
+    for (int i = 0; i < level; i++) {
+        printf("->");
+    }
+    printf("%d\n", p->value);
+
+    printBST(p->left, level + 1);
+    printBST(p->right, level + 1);
+}
+
+// Tim m lon nhat sao cho m <= k
+BinarySearchTree* cau_2c(BinarySearchTree* p, int k) {
+    if (p == NULL) {
+        return NULL;
+    }
+
+    if (p->value < k) {
+        BinarySearchTree* found = cau_2c(p->right, k);
+        if (found != NULL) {
+            return found;
+        }
+    }
+
+    // Sau khi de quy ben phai nhung van khong ra ket qua
+    // Maybe p chua gia tri minh can tim
+    printf("p->value %d\n", p->value);
+    if (p->value <= k) {
+        return p;
+    }
+
+    // p > k, cau tra loi nam o ben trai
+    return cau_2c(p->left, k);
+}
+
+void cau_2() {
+    printf("cau 2\n");
+
+    BinarySearchTree* head = NULL;
+    head = insertBST(head, 5);
+    insertBST(head, 2);
+    insertBST(head, 1);
+    insertBST(head, 3);
+    insertBST(head, 8);
+    insertBST(head, 6);
+    insertBST(head, 9);
+    printBST(head, 0);
+
+    BinarySearchTree* found = findBST(head, 9);
+    if (found != NULL) {
+        printf("found %d\n", found->value);
+    }
+
+    found = findBST(head, 10);
+    if (found != NULL) {
+        printf("found %d\n", found->value);
+    } else {
+        printf("not found %d\n", 10);
+    }
+
+    int k = 7;
+    found = cau_2c(head, k);
+    if (found != NULL) {
+        printf("found %d\n", found->value);
+    } else {
+        printf("not found with k %d\n", k);
+    }
+
+    deleteBST(head);
 }

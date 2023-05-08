@@ -40,6 +40,12 @@ zig-day05:
 zig-202202:
 	zig c++ -o 202202.out ./202202.cpp && ./202202.out && rm -rf ./202202.out
 
+202201:
+	g++ -Wall -Wextra -o 202201.out ./202201.cpp && ./202201.out && rm -rf ./202201.out
+
+zig-202201:
+	zig c++ -o 202201.out ./202201.cpp && ./202201.out && rm -rf ./202201.out
+
 format:
 	# Use clang-format from macports
 	clang-format-mp-15 -i *.cpp

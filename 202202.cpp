@@ -5,11 +5,13 @@ using namespace std;
 
 void cau_1();
 void cau_2();
+void cau_3();
 
 int main() {
     printf("202202\n");
     cau_1();
     cau_2();
+    cau_3();
 }
 
 void print_arr(int* arr, int n) {
@@ -226,4 +228,68 @@ void cau_2() {
     }
 
     deleteBST(head);
+}
+
+class ThietBiDien {
+  protected:
+    string ten;
+    string ma_so;
+    int vi_tri;
+    bool is_turn_on;
+
+  public:
+    virtual void Trigger() {
+        this->is_turn_on = !this->is_turn_on;
+        printf("Trigger %d\n", this->is_turn_on);
+    }
+};
+
+class Den : public ThietBiDien {
+  protected:
+    int do_sang;
+};
+
+class DenNgu : public Den {
+  private:
+    int mau_sang;
+
+  public:
+    void update_mau_sang(int mau_sang) { this->mau_sang = mau_sang; }
+};
+
+class DenChieuSan : public Den {};
+
+class DieuHoa : public ThietBiDien {
+  private:
+    int nhiet_do;
+    int che_do;
+    int muc_do;
+
+  public:
+    void update_nhiet_do(int nhiet_do) { this->nhiet_do = nhiet_do; }
+};
+
+class TV : public ThietBiDien {
+  private:
+    int am_luong;
+    int kenh;
+};
+
+void cau_3() {
+    printf("cau_3\n");
+
+    ThietBiDien* arr[3];
+    // ThietBiDien** arr = new ThietBiDien*[3];
+
+    arr[0] = new DenNgu();
+    arr[1] = new DieuHoa();
+    arr[2] = new TV();
+
+    for (int i = 0; i < 3; i++) {
+        arr[i]->Trigger();
+    }
+
+    for (int i = 0; i < 3; i++) {
+        arr[i]->Trigger();
+    }
 }

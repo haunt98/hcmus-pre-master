@@ -5,17 +5,12 @@
 using namespace std;
 
 void cau_1();
+void cau_2();
 
 int main() {
     printf("202201\n");
     cau_1();
-}
-
-void print_arr(int* arr, int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+    cau_2();
 }
 
 struct Sach {
@@ -69,5 +64,208 @@ void cau_1() {
 
     for (int i = 0; i < 4; i++) {
         delete arr[i];
+    }
+}
+
+struct NodeNguyen {
+    int value;
+    NodeNguyen* next;
+    NodeNguyen* pre;
+};
+
+void print_node(NodeNguyen* p) {
+    for (;;) {
+        if (p == NULL) {
+            printf("NULL\n");
+            return;
+        }
+
+        printf("%d->", p->value);
+        p = p->next;
+    }
+}
+
+void delete_node(NodeNguyen* p) {
+    for (;;) {
+        if (p == NULL) {
+            return;
+        }
+
+        NodeNguyen* temp = p;
+        p = p->next;
+        delete temp;
+    }
+}
+
+NodeNguyen* create_node(int* arr, int n) {
+    if (n < 1) {
+        return NULL;
+    }
+
+    NodeNguyen* head = new NodeNguyen();
+    head->value = arr[0];
+
+    NodeNguyen* pre = head;
+    for (int i = 1; i < n; i++) {
+        NodeNguyen* p = new NodeNguyen();
+        p->value = arr[i];
+        p->pre = pre;
+
+        pre->next = p;
+        pre = p;
+    }
+
+    return head;
+}
+
+NodeNguyen* find_pre_k(NodeNguyen* p, int k) {
+    for (;;) {
+        if (p == NULL) {
+            return NULL;
+        }
+
+        if (p->value == k) {
+            return p->pre;
+        }
+
+        p = p->next;
+    }
+}
+
+// Return new head if head is k
+NodeNguyen* delete_k(NodeNguyen* p, int k) {
+    NodeNguyen* head = p;
+
+    for (;;) {
+        if (p == NULL) {
+            break;
+        }
+
+        NodeNguyen* pre = p->pre;
+        NodeNguyen* next = p->next;
+        if (p->value == k) {
+            if (pre == NULL) {
+                // Only head has no pre
+                head = next;
+            } else {
+                pre->next = next;
+
+                if (next != NULL) {
+                    next->pre = pre;
+                }
+            }
+
+            delete p;
+        }
+
+        p = next;
+    }
+
+    return head;
+}
+
+NodeNguyen* merge_already_sorted(NodeNguyen* p, NodeNguyen* q) {
+    NodeNguyen* head = NULL;
+    NodeNguyen* pre = NULL;
+
+    for (;;) {
+        if (p == NULL && q == NULL) {
+            break;
+        }
+
+        // if (p != NULL) {
+        //     printf("p %d\n", p->value);
+        // }
+
+        // if (q != NULL) {
+        //     printf("q %d\n", q->value);
+        // }
+
+        // p or q can be NULL
+        bool choose_p = false;
+        if (q == NULL) {
+            choose_p = true;
+        } else {
+            if (p != NULL && p->value < q->value) {
+                choose_p = true;
+            }
+        }
+
+        if (choose_p) {
+            if (pre != NULL) {
+                pre->next = p;
+            }
+            p->pre = pre;
+            pre = p;
+            p = p->next;
+
+            // Not init head yet
+            if (head == NULL) {
+                head = pre;
+            }
+        } else {
+            if (pre != NULL) {
+                pre->next = q;
+            }
+            q->pre = pre;
+            pre = q;
+            q = q->next;
+
+            // Not init head yet
+            if (head == NULL) {
+                head = pre;
+            }
+        }
+    }
+
+    return head;
+}
+
+void cau_2() {
+    printf("cau_2\n");
+    int arr[4] = {1, 2, 3, 4};
+    NodeNguyen* p = create_node(arr, 4);
+    print_node(p);
+
+    int k = 3;
+    NodeNguyen* found = find_pre_k(p, k);
+    if (found != NULL) {
+        printf("found pre k %d is %d\n", k, found->value);
+    } else {
+        printf("not found pre k %d\n", k);
+    }
+
+    k = 1;
+    NodeNguyen* new_head = delete_k(p, k);
+    print_node(new_head);
+
+    delete_node(new_head);
+
+    {
+        int arr_p[4] = {1, 3, 5, 7};
+        NodeNguyen* p = create_node(arr_p, 4);
+        print_node(p);
+
+        int arr_q[4] = {2, 4, 6, 8};
+        NodeNguyen* q = create_node(arr_q, 4);
+        print_node(q);
+
+        NodeNguyen* new_head = merge_already_sorted(p, q);
+        print_node(new_head);
+        delete_node(new_head);
+    }
+
+    {
+        int arr_p[4] = {1, 3, 5, 7};
+        NodeNguyen* p = create_node(arr_p, 4);
+        print_node(p);
+
+        int arr_q[4] = {2, 4, 6, 8};
+        NodeNguyen* q = create_node(arr_q, 4);
+        print_node(q);
+
+        NodeNguyen* new_head = merge_already_sorted(q, p);
+        print_node(new_head);
+        delete_node(new_head);
     }
 }

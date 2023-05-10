@@ -16,7 +16,4 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
-      - run: make day01
-      - run: make day02
-      - run: make day03
-      - run: make day04
+      - run: make gcc

@@ -6,11 +6,13 @@ using namespace std;
 
 void cau_1();
 void cau_2();
+void cau_3();
 
 int main() {
     printf("202201\n");
     cau_1();
     cau_2();
+    cau_3();
 }
 
 struct Sach {
@@ -268,4 +270,71 @@ void cau_2() {
         print_node(new_head);
         delete_node(new_head);
     }
+}
+
+class Observer {
+  public:
+    virtual void update() = 0;
+};
+
+class Button {
+  private:
+    Observer** observers;
+    int index = 0;
+
+  public:
+    Button() {
+        this->observers = new Observer*[4];
+        this->index = 0;
+    }
+
+    ~Button() { delete[] this->observers; }
+
+    void addObserver(Observer* obs) {
+        this->observers[this->index] = obs;
+        this->index++;
+    }
+
+    void removeOberver(Observer* obs) {
+        // TOOD
+    }
+
+    void notify() {
+        for (int i = 0; i < index; i++) {
+            this->observers[i]->update();
+        }
+    }
+};
+
+class Frame : public Observer {
+  public:
+    void update() { printf("Update Frame\n"); }
+};
+
+class Window : public Observer {
+  public:
+    void update() { printf("Update Window\n"); }
+};
+
+class Application {
+  public:
+    void main() {
+        Button* btn = new Button();
+        Frame* f = new Frame();
+        btn->addObserver(f);
+        Window* w = new Window();
+        btn->addObserver(w);
+        btn->notify();
+        delete w;
+        delete f;
+        delete btn;
+    }
+};
+
+void cau_3() {
+    printf("cau_3\n");
+
+    Application* app = new Application();
+    app->main();
+    delete app;
 }

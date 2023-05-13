@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -351,3 +352,31 @@ bool is_binary_tree(BinaryNode* p) {
 
     return true;
 }
+
+class DataStorage {
+  public:
+    string Name;
+    virtual int getSize() = 0;
+};
+
+class File : public DataStorage {
+  public:
+    int getSize() { return 1; }
+};
+
+class Folder : public DataStorage {
+  private:
+    DataStorage** children;
+    int n;
+
+  public:
+    int getSize() {
+        int size = 0;
+        for (int i = 0; i < n; i++) {
+            size += this->children[i]->getSize();
+        }
+        return size;
+    }
+};
+
+void cau_3() { printf("cau_3\n"); }

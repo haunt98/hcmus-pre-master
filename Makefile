@@ -13,6 +13,7 @@ gcc:
 	$(MAKE) 202202
 	$(MAKE) 202201
 	$(MAKE) 202102
+	$(MAKE) 202001
 
 zig:
 	$(MAKE) zig-day01
@@ -23,6 +24,7 @@ zig:
 	$(MAKE) zig-202202
 	$(MAKE) zig-202201
 	$(MAKE) zig-202102
+	$(MAKE) zig-202001
 
 day01:
 	g++ -Wall -Wextra -o day-01.out ./day-01.cpp && ./day-01.out && rm -rf ./day-01.out
@@ -71,6 +73,12 @@ zig-202201:
 
 zig-202102:
 	zig c++ -o 202102.out ./202102.cpp && ./202102.out && rm -rf ./202102.out
+
+202001:
+	g++ -Wall -Wextra -o 202001.out ./202001.cpp && ./202001.out && rm -rf ./202001.out
+
+zig-202001:
+	zig c++ -o 202001.out ./202001.cpp && ./202001.out && rm -rf ./202001.out
 
 format:
 	# Use clang-format from macports
